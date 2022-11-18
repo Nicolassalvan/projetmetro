@@ -1,0 +1,73 @@
+
+
+// Test fonction exercice 1 //
+int main(void) 
+{
+	Un_truc *truc1 ;
+	Un_truc *truc2 ;
+	Un_truc *truc3 ;
+	char *nom1 = "Station 1";
+	char *nom2 = "Station 2";
+	char *nom3 = "Station 3";
+	Tdata data1;
+	Tdata data2;
+	Tdata data3;
+	Une_coord coord1;
+	Une_coord coord2;
+	data1.sta.nom = nom1;
+	data1.sta.Tab_con = NULL;
+	data1.sta.con_pcc = NULL;
+	data1.sta.nb_con = 0;
+	coord1.lon = 10;
+	coord1.lat = 1;
+	truc1 = creer_truc(coord1, STA, data1, 0.0);
+	printf("%s\n", truc1->data.sta.nom);
+	data1.sta.nom = nom2;
+	data1.sta.nb_con = 0;
+	coord1.lon = 20;
+	coord1.lat = 2;
+	truc2 = creer_truc(coord1, STA, data1, 0.0);
+	printf("%s\n", truc2->data.sta.nom);	
+	data1.sta.nom = nom3;
+	data1.sta.nb_con = 0;
+	coord1.lon = 30;
+	coord1.lat = 3;
+	truc3 = creer_truc(coord1, STA, data1, 0.0);
+	printf("%s\n", truc3->data.sta.nom);
+	Un_elem *liste = NULL, *tmp;
+	liste = inserer_liste_trie(liste, truc1);
+	liste = inserer_liste_trie(liste, truc2);
+	liste = inserer_liste_trie(liste, truc3);
+	tmp = liste;
+	while (tmp != NULL) {
+		printf("%s\n", tmp->truc->data.sta.nom);
+		tmp = tmp->suiv;	
+	}
+	detruire_liste_et_truc(liste);
+	printf("liste supprimée\n");
+	return 0;
+}
+
+//Test Fonction lire_stations
+int main(void)
+{
+	Un_elem *liste = NULL, *tmp = NULL;
+	liste = lire_stations("type2.csv");
+	tmp = liste;
+	while (tmp != NULL) {
+		printf("%s\n", tmp->truc->data.sta.nom);
+		tmp = tmp->suiv;
+	}
+	detruire_liste_et_truc(liste);
+	return 0;
+}
+//Test fonction inserer_arb
+	Un_nabr *abr=creer_nabr(liste->truc), *noeud=creer_nabr(liste->suiv->truc);
+	printf("%s\n", abr->truc->data.sta.nom);
+	abr = inserer_abr(abr, noeud);
+	if (abr->g !=NULL) {
+		printf("Fils gauche: %s\n", abr->g->truc->data.sta.nom);
+	}
+	if (abr->d !=NULL) {
+		printf("Fils droit: %s\n", abr->d->truc->data.sta.nom);
+	}
