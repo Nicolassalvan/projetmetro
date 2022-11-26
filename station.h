@@ -1,5 +1,6 @@
 #ifndef STATION_H
 #define STATION_H 
+
 #include "truc.h"
 #include "coord.h"
 

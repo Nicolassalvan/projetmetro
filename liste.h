@@ -13,5 +13,6 @@ void detruire_liste(Un_elem *liste);
 void detruire_liste_et_truc(Un_elem *liste);
 void limite_zones(Un_elem* liste, Une_coord* limite_no, Une_coord* limite_se);
 void ecrire_liste(FILE *flux, Un_elem *liste);
+Un_elem *inserer_deb_liste(Un_elem *liste, Un_truc *truc) ;
 
 #endif

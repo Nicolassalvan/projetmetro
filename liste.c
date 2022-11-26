@@ -4,7 +4,7 @@
 #include "liste.h"
 #include <string.h>
 
-//OK
+// OK
 Un_elem *inserer_liste_trie(Un_elem *liste, Un_truc *truc)
 {
 	// In: liste chainée de type Un_elem, pointeur vers un truc
@@ -90,8 +90,9 @@ Un_elem *lire_stations(char* nom_fichier) {
 		//Le dernier caractère du nom est \n, il faut donc le supprimer
 		fscanf(fic, "%f ; %f ; %100[^\n]",&(coord.lon), &(coord.lat), nom);
 		lastchar = (int) strlen(nom);
-		nom[lastchar-1] = '\0';
-
+		if (nom[lastchar] == '\n') {
+			nom[lastchar] = '\0'; 
+		}
 		data.sta.nb_con = 0;
 		data.sta.Tab_con = NULL;
 		data.sta.con_pcc = NULL;
@@ -157,7 +158,7 @@ void limite_zones(Un_elem* liste, Une_coord* limite_no, Une_coord* limite_se) {
 	limite_se->lon = lonmin;
 }
 
-//OK
+// OK
 void ecrire_liste(FILE *flux, Un_elem *liste) {
 	if (flux == NULL) {
 		printf("Erreur création de fichier\n");
@@ -168,3 +169,25 @@ void ecrire_liste(FILE *flux, Un_elem *liste) {
 		liste = liste->suiv;
 	}
 }
+
+// OK
+Un_elem *inserer_deb_liste(Un_elem *liste, Un_truc *truc)
+{ 
+	// In: liste de connexions, connexion (truc) à insérer
+	// Out: liste de connextions avec truc inséré
+
+	if (truc==NULL) return liste;
+
+	Un_elem* liste_insert = (Un_elem*) malloc(sizeof(Un_elem));
+	liste_insert->truc = truc;
+	liste_insert->suiv = NULL;
+	if (liste == NULL) return liste_insert;
+
+	Un_elem *tmp = liste;
+	while (tmp->suiv != NULL) {
+		tmp = tmp->suiv;
+	}
+	tmp->suiv = liste_insert;
+	return liste;
+} 
+

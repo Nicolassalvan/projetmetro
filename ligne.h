@@ -1,4 +1,5 @@
-<#ifndef LIGNE_H
+
+#ifndef LIGNE_H
 #define LIGNE_H
 
 typedef struct _une_ligne
