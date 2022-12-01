@@ -12,62 +12,38 @@
 
 int main(void)
 {
-	Un_elem *liste = NULL;
-	liste = lire_stations("test.csv");
+	Une_ligne* liste = NULL;
+	/*
+	FILE* fic = fopen("ligne.csv", "r");
+	float vitesse, intervalle;
+	Une_ligne *ligne_insert = (Une_ligne*) malloc(sizeof(Une_ligne));
+	char *code=(char*) malloc(sizeof(char)*100), *color=(char*) malloc(sizeof(char)*100);
+	ligne_insert->code = (char*) malloc(sizeof(char)*100);
+	ligne_insert->color = (char*) malloc(sizeof(char)*100);
+	fscanf(fic,"%100[^ ;] ; %f ; %f ; %100[^\n]",code,&vitesse,&intervalle,color);
+	printf("%s, %s, %f, %f\n", code, color, vitesse, intervalle);
+	strcpy(ligne_insert->code,code);
+	strcpy(ligne_insert->color,color);
+	ligne_insert->vitesse=vitesse;
+	ligne_insert->intervalle=intervalle;
+	ligne_insert->suiv=NULL;
+	liste = inserer_ligne(liste,ligne_insert);
+	printf("%s, %s, %f, %f\n", liste->code, liste->color, liste->vitesse, liste->intervalle);
 
-	// Creation d'une ligne
-	Une_ligne *ligne = (Une_ligne*) malloc(sizeof(Une_ligne));
-	ligne->code = (char*) malloc(sizeof(char)*100);
-	ligne->color = (char*) malloc(sizeof(char)*100);
-	strcpy(ligne->code, "1");
-	strcpy(ligne->color, "#00FF00");
-	ligne->vitesse = 12.0;
-	ligne->intervalle = 100;
-	ligne->suiv = NULL;
+	fclose(fic);
+	*/
 
-
-	// Creation de deux connexions
-	Une_connexion con1, con2;
-	con1.sta_dep = liste->truc;
-	con1.sta_arr = liste->suiv->truc;
-	con1.ligne = ligne;
-	con2.sta_dep = liste->suiv->truc;
-	con2.sta_arr = liste->suiv->suiv->truc;
-	con2.ligne = ligne;
+	liste = lire_lignes("ligne.csv");
 	
-	// Creation des deux trucs
-	Un_truc *truc1, *truc2;
-	Une_coord coord1;
-	Une_coord coord2;
-	coord1.lat = 10;
-	coord1.lon = 01;
-	coord2.lat = 20;
-	coord2.lon = 02;
-	Tdata data1, data2;
-	data1.con = con1;
-	data2.con = con2;
-	truc1 = creer_truc(coord1, CON, data1, 0.0);
-	truc2 = creer_truc(coord2, CON, data2, 0.0);
-
-	printf("Dep: %s , Arr: %s , Ligne: %s \n",con1.sta_dep->data.sta.nom, con1.sta_arr->data.sta.nom, con1.ligne->code );
-	printf("Dep: %s , Arr: %s , Ligne: %s \n",con2.sta_dep->data.sta.nom, con2.sta_arr->data.sta.nom, con2.ligne->code );
-
-	printf("Dep: %s , Arr: %s  \n",truc1->data.con.sta_dep->data.sta.nom, truc1->data.con.sta_arr->data.sta.nom  );
-	printf("Dep: %s , Arr: %s \n",truc2->data.con.sta_dep->data.sta.nom, truc2->data.con.sta_arr->data.sta.nom );
-
-
-
-
-	Un_elem *liste_con=NULL;
-	liste_con = inserer_deb_liste(liste_con, truc1);
-	liste_con = inserer_deb_liste(liste_con, truc2);
-	Un_elem *tmp = liste_con;
-	while (tmp != NULL) {
-		printf("%s ; %s \n", tmp->truc->data.con.sta_dep->data.sta.nom, tmp->truc->data.con.sta_arr->data.sta.nom);
+	Une_ligne *tmp=liste;
+	while (tmp !=NULL) {
+		printf("%s ; %f ; %f ; %s\n", tmp->code, tmp->vitesse, tmp->intervalle, tmp->color);
 		tmp = tmp->suiv;
 	}
+	Une_ligne *ligne1=NULL;
+	ligne1 = chercher_ligne(liste, "1");
+	printf("%s\n", ligne1->code);
+	detruire_lignes(liste);
 
-
-	detruire_liste_et_truc(liste);
 	return 0;
 }

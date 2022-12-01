@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "liste.h"
+#include <math.h>
+
 #include "abr.h"
+#include "truc.h"
+#include "liste.h"
+#include "ligne.h"
+
 
 // OK
 Un_nabr *creer_nabr(Un_truc *truc) //l’allocation d’un noeud et son initialisation
@@ -92,3 +97,23 @@ void parcours_prefixe_abr(Un_nabr* abr, int n) {
 } 
 */
 
+Un_elem *lire_connexions(char *nom_fichier,Une_ligne *liste_ligne, Un_nabr *abr_sta)
+{
+	return NULL;
+	/*
+	//Créer les trucs correspondants
+	FILE *fic = fopen(nom_fichier,'r');
+	if(fic==NULL)
+	{
+		printf("Erreur ouverture fichier\n");
+		return NULL;
+	}
+	Un_elem *liste = (Un_elem*)malloc(sizeof(Un_elem));
+	if(liste==NULL)
+	{
+		printf("Erreur d'allocation mémoire liste");
+		return NULL;
+	}
+	*/
+
+}

@@ -1,8 +1,8 @@
-#ifndef ABR_H
-#define ABR_H
-
 #include "truc.h"
 #include "liste.h"
+
+#ifndef ABR_H
+#define ABR_H
 
 typedef struct _un_nabr{
 	Un_truc *truc; //La station
@@ -15,5 +15,7 @@ Un_nabr *inserer_abr(Un_nabr *abr, Un_nabr *n);
 Un_nabr *construire_abr(Un_elem *liste_sta);
 void detruire_abr(Un_nabr *abr);
 Un_truc *chercher_station(Un_nabr *abr, char *nom);
-void parcours_prefixe_abr(Un_nabr* abr, int n) ;
+//void parcours_prefixe_abr(Un_nabr* abr, int n);
+Un_elem *lire_connexions(char *nom_fichier, Une_ligne *liste_ligne, Un_nabr *abr_sta);
+
 #endif

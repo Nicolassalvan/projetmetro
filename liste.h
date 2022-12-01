@@ -1,9 +1,10 @@
-#ifndef LISTE_H
-#define LISTE_H
 #include "truc.h"
 
+#ifndef LISTE_H
+#define LISTE_H
+
 typedef struct _un_elem {
-	Un_truc *truc; //Une satation ou une connexion
+	Un_truc *truc; //Une station ou une connexion
 	struct _un_elem *suiv;
 } Un_elem;
 
@@ -14,5 +15,6 @@ void detruire_liste_et_truc(Un_elem *liste);
 void limite_zones(Un_elem* liste, Une_coord* limite_no, Une_coord* limite_se);
 void ecrire_liste(FILE *flux, Un_elem *liste);
 Un_elem *inserer_deb_liste(Un_elem *liste, Un_truc *truc) ;
+
 
 #endif

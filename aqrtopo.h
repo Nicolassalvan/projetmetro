@@ -1,8 +1,9 @@
+#include "coord.h"
+#include "truc.h"
+#include "liste.h"
+
 #ifndef AQRTOPO_H
 #define AQRTOPO_H
-
-#include "truc.h"
-#include "coord.h"
 
 typedef struct _un_noeud {
 	Un_truc *truc; //Une station ou une connexion

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "truc.h"
 #include "liste.h"
+#include "abr.h"
 #include <string.h>
 
 // OK
@@ -190,4 +191,3 @@ Un_elem *inserer_deb_liste(Un_elem *liste, Un_truc *truc)
 	tmp->suiv = liste_insert;
 	return liste;
 } 
-
