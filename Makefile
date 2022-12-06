@@ -8,10 +8,10 @@ OBJ = $(SRC:.c=.o)
 all : $(EXEC) 
 
 %.o : %.c
-	$(CC) -g -o $@ -c $<
+	$(CC) -g -o $@ -c $< 
 
 $(EXEC) : $(OBJ)
-	$(CC) -g -o $@ $^
+	$(CC) -g -o $@ $^ -lm
 
 clean :
 	rm -rf *.o

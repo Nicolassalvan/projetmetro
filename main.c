@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "abr.h"
 #include "aqrtopo.h"
 #include "connexion.h"
@@ -12,38 +13,48 @@
 
 int main(void)
 {
-	Une_ligne* liste = NULL;
-	/*
-	FILE* fic = fopen("ligne.csv", "r");
-	float vitesse, intervalle;
-	Une_ligne *ligne_insert = (Une_ligne*) malloc(sizeof(Une_ligne));
-	char *code=(char*) malloc(sizeof(char)*100), *color=(char*) malloc(sizeof(char)*100);
-	ligne_insert->code = (char*) malloc(sizeof(char)*100);
-	ligne_insert->color = (char*) malloc(sizeof(char)*100);
-	fscanf(fic,"%100[^ ;] ; %f ; %f ; %100[^\n]",code,&vitesse,&intervalle,color);
-	printf("%s, %s, %f, %f\n", code, color, vitesse, intervalle);
-	strcpy(ligne_insert->code,code);
-	strcpy(ligne_insert->color,color);
-	ligne_insert->vitesse=vitesse;
-	ligne_insert->intervalle=intervalle;
-	ligne_insert->suiv=NULL;
-	liste = inserer_ligne(liste,ligne_insert);
-	printf("%s, %s, %f, %f\n", liste->code, liste->color, liste->vitesse, liste->intervalle);
-
-	fclose(fic);
-	*/
-
-	liste = lire_lignes("ligne.csv");
-	
-	Une_ligne *tmp=liste;
-	while (tmp !=NULL) {
-		printf("%s ; %f ; %f ; %s\n", tmp->code, tmp->vitesse, tmp->intervalle, tmp->color);
-		tmp = tmp->suiv;
+	// Vérification : liste_connexions (exercice 4)
+	Une_ligne *lignes, *zebi;
+	Un_elem *l_con;
+	Un_elem *l_sta;
+	Un_nabr *abr_sta;
+	l_sta = lire_stations("liste_station.csv");
+	abr_sta = construire_abr(l_sta);
+	lignes = lire_lignes("liste_ligne.csv");
+	afficher_lignes(lignes);
+	l_con = lire_connexions("liste_connexion.csv", lignes, abr_sta);
+	if (l_con==NULL) {
+		printf("Gros FAIL\n");
 	}
-	Une_ligne *ligne1=NULL;
-	ligne1 = chercher_ligne(liste, "1");
-	printf("%s\n", ligne1->code);
-	detruire_lignes(liste);
-
+	/*
+	// On vérifie que la liste de connexion a été faite
+	Un_elem *tmpcon = l_con;
+	while (tmpcon != NULL) {
+		printf("%s ; %s ; %s\n", tmpcon->truc->data.con.ligne->code, tmpcon->truc->data.con.sta_dep->data.sta.nom, tmpcon->truc->data.con.sta_arr->data.sta.nom);
+		tmpcon = tmpcon->suiv;
+	}
+	*/
+	// On vérifie que le Tab_con a été modifié pour chaque station:
+	Un_elem* tmpsta=l_sta;
+	int n;
+	int i;
+	printf("\nVERIFICATION TABCON\n\n");
+	while (tmpsta !=NULL) {
+		printf("nb connexion=%d, Sta: %s\n", tmpsta->truc->data.sta.nb_con, tmpsta->truc->data.sta.nom);
+		printf("--> ");
+		for (i=0 ; i < tmpsta->truc->data.sta.nb_con ; i++ ) {
+			printf("%s\t", tmpsta->truc->data.sta.Tab_con[i]->data.con.sta_arr->data.sta.nom);
+		}	
+		printf("\n\n");
+		tmpsta = tmpsta->suiv;
+	}
+	// On vérifie que chaque intervalle de chaque ligne est maintenant non nul
+	printf("VERIFICATION DE LA MODIFICATION DE INTERVALLE\n");
+	Une_ligne *tmpligne = lignes;
+	while (tmpligne !=NULL) {
+		printf("Ligne %s: intervalle de %f min\n", tmpligne->code, tmpligne->intervalle);
+		tmpligne = tmpligne->suiv;
+	}
+	detruire_abr(abr_sta);
 	return 0;
 }
